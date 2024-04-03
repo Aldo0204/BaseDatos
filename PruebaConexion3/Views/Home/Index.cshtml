@@ -1,18 +1,20 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-
-
-   
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicia Sesión</title>
-    <!--  aquí -->
 
     <style>
- 
+        body {
+            background-color: #f5f5f5; 
+            color: #333; 
+            font-family: "Arial", sans-serif;
+        }
+
         .container {
             display: flex;
             justify-content: center;
@@ -22,47 +24,98 @@
 
         .form-container {
             width: 400px;
+            background-color: #fff; 
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         .form-control {
-            width: 500%; 
-            box-sizing: border-box; 
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc; 
+            border-radius: 5px;
+            background-color: #f9f9f9; 
+            font-size: 16px;
+            font-family: "Helvetica", sans-serif; 
         }
+
+        .panel-title h1 {
+            color: #555; 
+            font-size: 24px;
+            font-family: "Georgia", serif; 
+        }
+
+        .btn-success {
+            background-color: #8e6e3d;
+            color: #fff; 
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px; 
+            font-family: "Times New Roman", serif;
+        }
+
+            .btn-success:hover {
+                background-color: #72502b; 
+            }
+
+        .btn-dark {
+            background-color: #2b2b2b;
+            color: #fff; 
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 18px;
+            font-family: "Courier New", monospace; 
+        }
+
+            .btn-dark:hover {
+                background-color: #1a1a1a;
+            }
+
+        .label-primary {
+            color: #337ab7; 
+            text-decoration: none;
+            font-size: 14px; 
+            font-family: "Verdana", sans-serif;
+        }
+
+            .label-primary:hover {
+                text-decoration: underline;
+            }
     </style>
 </head>
 
 <body>
-        <main>
+    <main>
+        <div class="panel-title" style="text-align:center">
+            <h1>Inicia Sesión</h1>
+        </div>
 
+        <form action="@Url.Action("Acceso","Home")" method="post">
+            <div class="container" style="text-align:center; width:280px; margin-top:50px">
+                <label>Usuario</label>
+            </div>
+            <input class="form-control" type="text" name="txtusuario" id="txtusuario" />
 
-            <div class="panel-title" style="text-align:center">
-                <h1>Inicia Sesion</h1>
+            <div class="container" style="text-align:center; width:280px;">
+                <label>Contraseña</label>
             </div>
 
-            
+            <input class="form-control" type="password" name="txtpasword" id="txtpasword" /> <br />
+            <input class="form-control btn btn-success" type="submit" name="btnEntrar" id="btnEntrar" />
 
-            <form action="@Url.Action("Acceso","Home")" method="post">
-                <div class="container" style="text-align:center; width:280px; margin-top:50px">
-                    <label>Usuario</label>
-                </div>
-                <input class="form-control" type="text" name="txtusuario" id="txtusuario" />
+            <div >
+                <a class="label label-primary" style="cursor:pointer" onclick="ModalRegistar()">¿No tienes Cuenta? Registrate</a>
+            </div>
 
-                <div class="container" style="text-align:center; width:280px;">
-                    <label>Contraseña</label>
-                </div>
-
-                    <input class="form-control" type="password" name="txtpasword" id="txtpasword" /> <br />
-                    <input class="form-control btn btn-success" type="submit" name="btnEntrar" id="btnEntrar" />
-
-                    <div >
-                        <a class="label label-primary" style="cursor:pointer" onclick="ModalRegistar()">¿No tienes Cuenta? Registrate</a>
-                    </div>
-
-            </form>
-                <button type="button" class="btn btn-dark" onclick="ModalRecuperar()">¿Perdiste tu contraseña?</button>
-
-            
-        </main>
-
+        </form>
+        <button type="button" class="btn btn-dark" onclick="ModalRecuperar()">¿Perdiste tu contraseña?</button>
+    </main>
 </body>
 </html>
