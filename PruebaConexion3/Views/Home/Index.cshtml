@@ -2,27 +2,67 @@
     ViewBag.Title = "Home Page";
 }
 
-<main>
+
+   
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicia Sesión</title>
+    <!--  aquí -->
+
+    <style>
+ 
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .form-container {
+            width: 400px;
+        }
+
+        .form-control {
+            width: 500%; 
+            box-sizing: border-box; 
+        }
+    </style>
+</head>
+
+<body>
+        <main>
 
 
-
-    <div class="panel-title" style="text-align:center">
-        <h1>Inicia Sesion</h1>
-    </div>
-    <div class="container" style="text-align:center; width:400px; margin-top:50px">
-        <form action="@Url.Action("Acceso","Home")" method="post">
-            <label>Usuario</label>
-            <input class="form-control" type="text" name="txtusuario" id="txtusuario" />
-            <label>Contraseña</label>
-            <input class="form-control" type="password" name="txtpasword" id="txtpasword" /> <br />
-            <input class="form-control btn btn-success" type="submit" name="btnEntrar" id="btnEntrar" />
-
-            <div>
-                <a class="label label-primary" style="cursor:pointer" onclick="ModalRegistar()">¿No tienes Cuenta? Registrate</a>
+            <div class="panel-title" style="text-align:center">
+                <h1>Inicia Sesion</h1>
             </div>
 
-        </form>
-        <button type="button" class="btn btn-dark" onclick="ModalRecuperar()">¿Perdiste tu contraseña?</button>
+            
 
-    </div>
-</main>
+            <form action="@Url.Action("Acceso","Home")" method="post">
+                <div class="container" style="text-align:center; width:280px; margin-top:50px">
+                    <label>Usuario</label>
+                </div>
+                <input class="form-control" type="text" name="txtusuario" id="txtusuario" />
+
+                <div class="container" style="text-align:center; width:280px;">
+                    <label>Contraseña</label>
+                </div>
+
+                    <input class="form-control" type="password" name="txtpasword" id="txtpasword" /> <br />
+                    <input class="form-control btn btn-success" type="submit" name="btnEntrar" id="btnEntrar" />
+
+                    <div >
+                        <a class="label label-primary" style="cursor:pointer" onclick="ModalRegistar()">¿No tienes Cuenta? Registrate</a>
+                    </div>
+
+            </form>
+                <button type="button" class="btn btn-dark" onclick="ModalRecuperar()">¿Perdiste tu contraseña?</button>
+
+            
+        </main>
+
+</body>
+</html>
