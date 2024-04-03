@@ -1,0 +1,762 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BaseDatosProyectoValenciaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Abono">
+          <Key>
+            <PropertyRef Name="ID_Abono" />
+          </Key>
+          <Property Name="ID_Abono" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cantidad" Type="float" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="ID_Cotizacion" Type="int" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="ID_Cliente" />
+          </Key>
+          <Property Name="ID_Cliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Apellido" Type="varchar" MaxLength="30" />
+          <Property Name="Dirección" Type="varchar" MaxLength="150" />
+          <Property Name="Teléfono" Type="varchar" MaxLength="10" />
+          <Property Name="Teléfono_adicional" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Cotizacion">
+          <Key>
+            <PropertyRef Name="ID_Cotizacion" />
+          </Key>
+          <Property Name="ID_Cotizacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="ID_Cliente" Type="int" />
+          <Property Name="ID_Usuario" Type="int" />
+        </EntityType>
+        <EntityType Name="Cotizacion_Detalle">
+          <Key>
+            <PropertyRef Name="ID_Cotización_Detalle" />
+          </Key>
+          <Property Name="ID_Cotización_Detalle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cantidad_producto" Type="float" Nullable="false" />
+          <Property Name="Medidas_producto" Type="varchar" MaxLength="150" />
+          <Property Name="Color_producto" Type="varchar" MaxLength="25" />
+          <Property Name="Observaciones" Type="varchar" MaxLength="200" />
+          <Property Name="Precio_producto" Type="float" />
+          <Property Name="ID_Cotizacion" Type="int" />
+          <Property Name="ID_Producto" Type="int" />
+        </EntityType>
+        <EntityType Name="Estatus">
+          <Key>
+            <PropertyRef Name="ID_Estatus" />
+          </Key>
+          <Property Name="ID_Estatus" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="ID_Producto" />
+          </Key>
+          <Property Name="ID_Producto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre_producto" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="ID_Rol" />
+          </Key>
+          <Property Name="ID_Rol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Seguimiento">
+          <Key>
+            <PropertyRef Name="ID_Seguimiento" />
+          </Key>
+          <Property Name="ID_Seguimiento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fecha_inicio" Type="date" Nullable="false" />
+          <Property Name="Fecha_fin" Type="date" />
+          <Property Name="ID_Estatus" Type="int" />
+          <Property Name="ID_Cotizacion" Type="int" />
+          <Property Name="ID_Usuario" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="ID_Usuario" />
+          </Key>
+          <Property Name="ID_Usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="Usuario" Type="varchar" MaxLength="40" />
+          <Property Name="Contrasena" Type="varchar" MaxLength="30" />
+          <Property Name="ID_Rol" Type="int" />
+        </EntityType>
+        <EntityType Name="Venta">
+          <Key>
+            <PropertyRef Name="ID_Venta" />
+          </Key>
+          <Property Name="ID_Venta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fecha_venta" Type="date" Nullable="false" />
+          <Property Name="ID_Cotizacion" Type="int" />
+          <Property Name="ID_Usuario" Type="int" />
+        </EntityType>
+        <Association Name="fk_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="Cotizacion" Type="Self.Cotizacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ID_Cliente" />
+            </Principal>
+            <Dependent Role="Cotizacion">
+              <PropertyRef Name="ID_Cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Cotizacion1">
+          <End Role="Cotizacion" Type="Self.Cotizacion" Multiplicity="0..1" />
+          <End Role="Venta" Type="Self.Venta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cotizacion">
+              <PropertyRef Name="ID_Cotizacion" />
+            </Principal>
+            <Dependent Role="Venta">
+              <PropertyRef Name="ID_Cotizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Cotizacion2">
+          <End Role="Cotizacion" Type="Self.Cotizacion" Multiplicity="0..1" />
+          <End Role="Abono" Type="Self.Abono" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cotizacion">
+              <PropertyRef Name="ID_Cotizacion" />
+            </Principal>
+            <Dependent Role="Abono">
+              <PropertyRef Name="ID_Cotizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Cotizacion3">
+          <End Role="Cotizacion" Type="Self.Cotizacion" Multiplicity="0..1" />
+          <End Role="Seguimiento" Type="Self.Seguimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cotizacion">
+              <PropertyRef Name="ID_Cotizacion" />
+            </Principal>
+            <Dependent Role="Seguimiento">
+              <PropertyRef Name="ID_Cotizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Cotizacion4">
+          <End Role="Cotizacion" Type="Self.Cotizacion" Multiplicity="0..1" />
+          <End Role="Cotizacion_Detalle" Type="Self.Cotizacion_Detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cotizacion">
+              <PropertyRef Name="ID_Cotizacion" />
+            </Principal>
+            <Dependent Role="Cotizacion_Detalle">
+              <PropertyRef Name="ID_Cotizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Estatus">
+          <End Role="Estatus" Type="Self.Estatus" Multiplicity="0..1" />
+          <End Role="Seguimiento" Type="Self.Seguimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estatus">
+              <PropertyRef Name="ID_Estatus" />
+            </Principal>
+            <Dependent Role="Seguimiento">
+              <PropertyRef Name="ID_Estatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Producto">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
+          <End Role="Cotizacion_Detalle" Type="Self.Cotizacion_Detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ID_Producto" />
+            </Principal>
+            <Dependent Role="Cotizacion_Detalle">
+              <PropertyRef Name="ID_Producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Rol">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="ID_Rol" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="ID_Rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Cotizacion" Type="Self.Cotizacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="ID_Usuario" />
+            </Principal>
+            <Dependent Role="Cotizacion">
+              <PropertyRef Name="ID_Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Usuario1">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Venta" Type="Self.Venta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="ID_Usuario" />
+            </Principal>
+            <Dependent Role="Venta">
+              <PropertyRef Name="ID_Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Usuario2">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Seguimiento" Type="Self.Seguimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="ID_Usuario" />
+            </Principal>
+            <Dependent Role="Seguimiento">
+              <PropertyRef Name="ID_Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BaseDatosProyectoValenciaModelStoreContainer">
+          <EntitySet Name="Abono" EntityType="Self.Abono" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cotizacion" EntityType="Self.Cotizacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cotizacion_Detalle" EntityType="Self.Cotizacion_Detalle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estatus" EntityType="Self.Estatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Seguimiento" EntityType="Self.Seguimiento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Venta" EntityType="Self.Venta" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_Cliente" Association="Self.fk_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Cotizacion" EntitySet="Cotizacion" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Cotizacion1" Association="Self.fk_Cotizacion1">
+            <End Role="Cotizacion" EntitySet="Cotizacion" />
+            <End Role="Venta" EntitySet="Venta" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Cotizacion2" Association="Self.fk_Cotizacion2">
+            <End Role="Cotizacion" EntitySet="Cotizacion" />
+            <End Role="Abono" EntitySet="Abono" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Cotizacion3" Association="Self.fk_Cotizacion3">
+            <End Role="Cotizacion" EntitySet="Cotizacion" />
+            <End Role="Seguimiento" EntitySet="Seguimiento" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Cotizacion4" Association="Self.fk_Cotizacion4">
+            <End Role="Cotizacion" EntitySet="Cotizacion" />
+            <End Role="Cotizacion_Detalle" EntitySet="Cotizacion_Detalle" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Estatus" Association="Self.fk_Estatus">
+            <End Role="Estatus" EntitySet="Estatus" />
+            <End Role="Seguimiento" EntitySet="Seguimiento" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Producto" Association="Self.fk_Producto">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="Cotizacion_Detalle" EntitySet="Cotizacion_Detalle" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Rol" Association="Self.fk_Rol">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Usuario" Association="Self.fk_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Cotizacion" EntitySet="Cotizacion" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Usuario1" Association="Self.fk_Usuario1">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Venta" EntitySet="Venta" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Usuario2" Association="Self.fk_Usuario2">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Seguimiento" EntitySet="Seguimiento" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BaseDatosProyectoValenciaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Abono">
+          <Key>
+            <PropertyRef Name="ID_Abono" />
+          </Key>
+          <Property Name="ID_Abono" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cantidad" Type="Double" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ID_Cotizacion" Type="Int32" />
+          <NavigationProperty Name="Cotizacion" Relationship="Self.fk_Cotizacion2" FromRole="Abono" ToRole="Cotizacion" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="ID_Cliente" />
+          </Key>
+          <Property Name="ID_Cliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Apellido" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Dirección" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Teléfono" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Teléfono_adicional" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Cotizacion" Relationship="Self.fk_Cliente" FromRole="Cliente" ToRole="Cotizacion" />
+        </EntityType>
+        <EntityType Name="Cotizacion">
+          <Key>
+            <PropertyRef Name="ID_Cotizacion" />
+          </Key>
+          <Property Name="ID_Cotizacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ID_Cliente" Type="Int32" />
+          <Property Name="ID_Usuario" Type="Int32" />
+          <NavigationProperty Name="Abono" Relationship="Self.fk_Cotizacion2" FromRole="Cotizacion" ToRole="Abono" />
+          <NavigationProperty Name="Cliente" Relationship="Self.fk_Cliente" FromRole="Cotizacion" ToRole="Cliente" />
+          <NavigationProperty Name="Venta" Relationship="Self.fk_Cotizacion1" FromRole="Cotizacion" ToRole="Venta" />
+          <NavigationProperty Name="Seguimiento" Relationship="Self.fk_Cotizacion3" FromRole="Cotizacion" ToRole="Seguimiento" />
+          <NavigationProperty Name="Cotizacion_Detalle" Relationship="Self.fk_Cotizacion4" FromRole="Cotizacion" ToRole="Cotizacion_Detalle" />
+          <NavigationProperty Name="Usuario" Relationship="Self.fk_Usuario" FromRole="Cotizacion" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Cotizacion_Detalle">
+          <Key>
+            <PropertyRef Name="ID_Cotización_Detalle" />
+          </Key>
+          <Property Name="ID_Cotización_Detalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cantidad_producto" Type="Double" Nullable="false" />
+          <Property Name="Medidas_producto" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Color_producto" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Observaciones" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Precio_producto" Type="Double" />
+          <Property Name="ID_Cotizacion" Type="Int32" />
+          <Property Name="ID_Producto" Type="Int32" />
+          <NavigationProperty Name="Cotizacion" Relationship="Self.fk_Cotizacion4" FromRole="Cotizacion_Detalle" ToRole="Cotizacion" />
+          <NavigationProperty Name="Producto" Relationship="Self.fk_Producto" FromRole="Cotizacion_Detalle" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Estatus">
+          <Key>
+            <PropertyRef Name="ID_Estatus" />
+          </Key>
+          <Property Name="ID_Estatus" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Estado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Seguimiento" Relationship="Self.fk_Estatus" FromRole="Estatus" ToRole="Seguimiento" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="ID_Producto" />
+          </Key>
+          <Property Name="ID_Producto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre_producto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Cotizacion_Detalle" Relationship="Self.fk_Producto" FromRole="Producto" ToRole="Cotizacion_Detalle" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="ID_Rol" />
+          </Key>
+          <Property Name="ID_Rol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Usuario" Relationship="Self.fk_Rol" FromRole="Rol" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Seguimiento">
+          <Key>
+            <PropertyRef Name="ID_Seguimiento" />
+          </Key>
+          <Property Name="ID_Seguimiento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fecha_inicio" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Fecha_fin" Type="DateTime" Precision="0" />
+          <Property Name="ID_Estatus" Type="Int32" />
+          <Property Name="ID_Cotizacion" Type="Int32" />
+          <Property Name="ID_Usuario" Type="Int32" />
+          <NavigationProperty Name="Cotizacion" Relationship="Self.fk_Cotizacion3" FromRole="Seguimiento" ToRole="Cotizacion" />
+          <NavigationProperty Name="Estatus" Relationship="Self.fk_Estatus" FromRole="Seguimiento" ToRole="Estatus" />
+          <NavigationProperty Name="Usuario" Relationship="Self.fk_Usuario2" FromRole="Seguimiento" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="ID_Usuario" />
+          </Key>
+          <Property Name="ID_Usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Usuario1" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Contrasena" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ID_Rol" Type="Int32" />
+          <NavigationProperty Name="Cotizacion" Relationship="Self.fk_Usuario" FromRole="Usuario" ToRole="Cotizacion" />
+          <NavigationProperty Name="Rol" Relationship="Self.fk_Rol" FromRole="Usuario" ToRole="Rol" />
+          <NavigationProperty Name="Seguimiento" Relationship="Self.fk_Usuario2" FromRole="Usuario" ToRole="Seguimiento" />
+          <NavigationProperty Name="Venta" Relationship="Self.fk_Usuario1" FromRole="Usuario" ToRole="Venta" />
+        </EntityType>
+        <EntityType Name="Venta">
+          <Key>
+            <PropertyRef Name="ID_Venta" />
+          </Key>
+          <Property Name="ID_Venta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fecha_venta" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ID_Cotizacion" Type="Int32" />
+          <Property Name="ID_Usuario" Type="Int32" />
+          <NavigationProperty Name="Cotizacion" Relationship="Self.fk_Cotizacion1" FromRole="Venta" ToRole="Cotizacion" />
+          <NavigationProperty Name="Usuario" Relationship="Self.fk_Usuario1" FromRole="Venta" ToRole="Usuario" />
+        </EntityType>
+        <Association Name="fk_Cotizacion2">
+          <End Role="Cotizacion" Type="Self.Cotizacion" Multiplicity="0..1" />
+          <End Role="Abono" Type="Self.Abono" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cotizacion">
+              <PropertyRef Name="ID_Cotizacion" />
+            </Principal>
+            <Dependent Role="Abono">
+              <PropertyRef Name="ID_Cotizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="Cotizacion" Type="Self.Cotizacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ID_Cliente" />
+            </Principal>
+            <Dependent Role="Cotizacion">
+              <PropertyRef Name="ID_Cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Cotizacion1">
+          <End Role="Cotizacion" Type="Self.Cotizacion" Multiplicity="0..1" />
+          <End Role="Venta" Type="Self.Venta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cotizacion">
+              <PropertyRef Name="ID_Cotizacion" />
+            </Principal>
+            <Dependent Role="Venta">
+              <PropertyRef Name="ID_Cotizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Cotizacion3">
+          <End Role="Cotizacion" Type="Self.Cotizacion" Multiplicity="0..1" />
+          <End Role="Seguimiento" Type="Self.Seguimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cotizacion">
+              <PropertyRef Name="ID_Cotizacion" />
+            </Principal>
+            <Dependent Role="Seguimiento">
+              <PropertyRef Name="ID_Cotizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Cotizacion4">
+          <End Role="Cotizacion" Type="Self.Cotizacion" Multiplicity="0..1" />
+          <End Role="Cotizacion_Detalle" Type="Self.Cotizacion_Detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cotizacion">
+              <PropertyRef Name="ID_Cotizacion" />
+            </Principal>
+            <Dependent Role="Cotizacion_Detalle">
+              <PropertyRef Name="ID_Cotizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Cotizacion" Type="Self.Cotizacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="ID_Usuario" />
+            </Principal>
+            <Dependent Role="Cotizacion">
+              <PropertyRef Name="ID_Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Producto">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
+          <End Role="Cotizacion_Detalle" Type="Self.Cotizacion_Detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ID_Producto" />
+            </Principal>
+            <Dependent Role="Cotizacion_Detalle">
+              <PropertyRef Name="ID_Producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Estatus">
+          <End Role="Estatus" Type="Self.Estatus" Multiplicity="0..1" />
+          <End Role="Seguimiento" Type="Self.Seguimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estatus">
+              <PropertyRef Name="ID_Estatus" />
+            </Principal>
+            <Dependent Role="Seguimiento">
+              <PropertyRef Name="ID_Estatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Rol">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="ID_Rol" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="ID_Rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Usuario2">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Seguimiento" Type="Self.Seguimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="ID_Usuario" />
+            </Principal>
+            <Dependent Role="Seguimiento">
+              <PropertyRef Name="ID_Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Usuario1">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Venta" Type="Self.Venta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="ID_Usuario" />
+            </Principal>
+            <Dependent Role="Venta">
+              <PropertyRef Name="ID_Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BaseDatosProyectoValenciaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Abono" EntityType="Self.Abono" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+          <EntitySet Name="Cotizacion" EntityType="Self.Cotizacion" />
+          <EntitySet Name="Cotizacion_Detalle" EntityType="Self.Cotizacion_Detalle" />
+          <EntitySet Name="Estatus" EntityType="Self.Estatus" />
+          <EntitySet Name="Producto" EntityType="Self.Producto" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" />
+          <EntitySet Name="Seguimiento" EntityType="Self.Seguimiento" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <EntitySet Name="Venta" EntityType="Self.Venta" />
+          <AssociationSet Name="fk_Cotizacion2" Association="Self.fk_Cotizacion2">
+            <End Role="Cotizacion" EntitySet="Cotizacion" />
+            <End Role="Abono" EntitySet="Abono" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Cliente" Association="Self.fk_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Cotizacion" EntitySet="Cotizacion" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Cotizacion1" Association="Self.fk_Cotizacion1">
+            <End Role="Cotizacion" EntitySet="Cotizacion" />
+            <End Role="Venta" EntitySet="Venta" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Cotizacion3" Association="Self.fk_Cotizacion3">
+            <End Role="Cotizacion" EntitySet="Cotizacion" />
+            <End Role="Seguimiento" EntitySet="Seguimiento" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Cotizacion4" Association="Self.fk_Cotizacion4">
+            <End Role="Cotizacion" EntitySet="Cotizacion" />
+            <End Role="Cotizacion_Detalle" EntitySet="Cotizacion_Detalle" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Usuario" Association="Self.fk_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Cotizacion" EntitySet="Cotizacion" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Producto" Association="Self.fk_Producto">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="Cotizacion_Detalle" EntitySet="Cotizacion_Detalle" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Estatus" Association="Self.fk_Estatus">
+            <End Role="Estatus" EntitySet="Estatus" />
+            <End Role="Seguimiento" EntitySet="Seguimiento" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Rol" Association="Self.fk_Rol">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Usuario2" Association="Self.fk_Usuario2">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Seguimiento" EntitySet="Seguimiento" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Usuario1" Association="Self.fk_Usuario1">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Venta" EntitySet="Venta" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BaseDatosProyectoValenciaModelStoreContainer" CdmEntityContainer="BaseDatosProyectoValenciaEntities">
+          <EntitySetMapping Name="Abono">
+            <EntityTypeMapping TypeName="BaseDatosProyectoValenciaModel.Abono">
+              <MappingFragment StoreEntitySet="Abono">
+                <ScalarProperty Name="ID_Abono" ColumnName="ID_Abono" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="ID_Cotizacion" ColumnName="ID_Cotizacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="BaseDatosProyectoValenciaModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="ID_Cliente" ColumnName="ID_Cliente" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Dirección" ColumnName="Dirección" />
+                <ScalarProperty Name="Teléfono" ColumnName="Teléfono" />
+                <ScalarProperty Name="Teléfono_adicional" ColumnName="Teléfono_adicional" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cotizacion">
+            <EntityTypeMapping TypeName="BaseDatosProyectoValenciaModel.Cotizacion">
+              <MappingFragment StoreEntitySet="Cotizacion">
+                <ScalarProperty Name="ID_Cotizacion" ColumnName="ID_Cotizacion" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="ID_Cliente" ColumnName="ID_Cliente" />
+                <ScalarProperty Name="ID_Usuario" ColumnName="ID_Usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cotizacion_Detalle">
+            <EntityTypeMapping TypeName="BaseDatosProyectoValenciaModel.Cotizacion_Detalle">
+              <MappingFragment StoreEntitySet="Cotizacion_Detalle">
+                <ScalarProperty Name="ID_Cotización_Detalle" ColumnName="ID_Cotización_Detalle" />
+                <ScalarProperty Name="Cantidad_producto" ColumnName="Cantidad_producto" />
+                <ScalarProperty Name="Medidas_producto" ColumnName="Medidas_producto" />
+                <ScalarProperty Name="Color_producto" ColumnName="Color_producto" />
+                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+                <ScalarProperty Name="Precio_producto" ColumnName="Precio_producto" />
+                <ScalarProperty Name="ID_Cotizacion" ColumnName="ID_Cotizacion" />
+                <ScalarProperty Name="ID_Producto" ColumnName="ID_Producto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estatus">
+            <EntityTypeMapping TypeName="BaseDatosProyectoValenciaModel.Estatus">
+              <MappingFragment StoreEntitySet="Estatus">
+                <ScalarProperty Name="ID_Estatus" ColumnName="ID_Estatus" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Producto">
+            <EntityTypeMapping TypeName="BaseDatosProyectoValenciaModel.Producto">
+              <MappingFragment StoreEntitySet="Producto">
+                <ScalarProperty Name="ID_Producto" ColumnName="ID_Producto" />
+                <ScalarProperty Name="Nombre_producto" ColumnName="Nombre_producto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rol">
+            <EntityTypeMapping TypeName="BaseDatosProyectoValenciaModel.Rol">
+              <MappingFragment StoreEntitySet="Rol">
+                <ScalarProperty Name="ID_Rol" ColumnName="ID_Rol" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seguimiento">
+            <EntityTypeMapping TypeName="BaseDatosProyectoValenciaModel.Seguimiento">
+              <MappingFragment StoreEntitySet="Seguimiento">
+                <ScalarProperty Name="ID_Seguimiento" ColumnName="ID_Seguimiento" />
+                <ScalarProperty Name="Fecha_inicio" ColumnName="Fecha_inicio" />
+                <ScalarProperty Name="Fecha_fin" ColumnName="Fecha_fin" />
+                <ScalarProperty Name="ID_Estatus" ColumnName="ID_Estatus" />
+                <ScalarProperty Name="ID_Cotizacion" ColumnName="ID_Cotizacion" />
+                <ScalarProperty Name="ID_Usuario" ColumnName="ID_Usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="BaseDatosProyectoValenciaModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="BaseDatosProyectoValenciaModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="ID_Usuario" ColumnName="ID_Usuario" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Usuario1" ColumnName="Usuario" />
+                <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
+                <ScalarProperty Name="ID_Rol" ColumnName="ID_Rol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Venta">
+            <EntityTypeMapping TypeName="BaseDatosProyectoValenciaModel.Venta">
+              <MappingFragment StoreEntitySet="Venta">
+                <ScalarProperty Name="ID_Venta" ColumnName="ID_Venta" />
+                <ScalarProperty Name="Fecha_venta" ColumnName="Fecha_venta" />
+                <ScalarProperty Name="ID_Cotizacion" ColumnName="ID_Cotizacion" />
+                <ScalarProperty Name="ID_Usuario" ColumnName="ID_Usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
