@@ -3,7 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
+using PruebaConexion3.Models;
+using System.Data;
+using System.Net.Mail;
+using System.Net.Security;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
+using Antlr.Runtime.Tree;
 
 namespace PruebaConexion3.Controllers
 {
@@ -14,8 +20,8 @@ namespace PruebaConexion3.Controllers
             return View();
         }
 
-        /*
-         
+        //Conexion db = new Conexion(); ---> Esto fue necesario para acceder a los datos de la BD con la clase Conexion
+
         public ActionResult Acceso()
         {
             Login login = new Login();
@@ -24,6 +30,7 @@ namespace PruebaConexion3.Controllers
 
             string consulta = "SELECT id_empleado From Tbl_Empleados WHERE usuario= '" + login.usuario + "' and contrasena ='" + login.passsword + "'";
 
+            //Aquí se hace referencia a 'db' y es una instancia de la clase Conexion
             int status = db.selval(consulta);
 
             if (status != 0)
@@ -36,9 +43,9 @@ namespace PruebaConexion3.Controllers
             }
         }
 
-        */
         
-        public ActionResult About()
+        
+       /* public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
 
@@ -50,6 +57,6 @@ namespace PruebaConexion3.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
-        }
+        }*/
     }
 }
